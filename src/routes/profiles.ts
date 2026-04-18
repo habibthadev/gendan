@@ -1,8 +1,8 @@
 import { Hono } from "hono"
-import { validateCreateBody, isError, queryFiltersSchema } from "@/lib/validate"
-import { classifyAge } from "@/lib/classify"
-import { fetchExternalApis } from "@/services/external-apis"
-import * as profileService from "@/services/profiles"
+import { validateCreateBody, isError, queryFiltersSchema } from "../lib/validate"
+import { classifyAge } from "../lib/classify"
+import { fetchExternalApis } from "../services/external-apis"
+import * as profileService from "../services/profiles"
 
 export const profileRoutes = new Hono()
 

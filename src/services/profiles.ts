@@ -1,4 +1,4 @@
-import { getProfiles } from "@/db"
+import { getProfiles } from "../db"
 import { v7 as uuidv7 } from "uuid"
 
 type Profile = {
