@@ -3,9 +3,10 @@ import { MongoClient, type Collection } from "mongodb"
 const MONGODB_URI = process.env.MONGODB_URI ?? "mongodb://localhost:27017"
 const DB_NAME = process.env.DB_NAME ?? "gendan"
 
-let profiles: Collection
+let profiles: Collection | null = null
+let connectPromise: Promise<void> | null = null
 
-export const connectDb = async () => {
+const initDb = async () => {
   const client = new MongoClient(MONGODB_URI)
   await client.connect()
   const db = client.db(DB_NAME)
@@ -17,4 +18,12 @@ export const connectDb = async () => {
   await profiles.createIndex({ id: 1 }, { unique: true })
 }
 
-export const getProfiles = () => profiles
+export const connectDb = (): Promise<void> => {
+  if (!connectPromise) connectPromise = initDb()
+  return connectPromise
+}
+
+export const getProfiles = (): Collection => {
+  if (!profiles) throw new Error("Database not initialized")
+  return profiles
+}
